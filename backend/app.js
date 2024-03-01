@@ -10,6 +10,10 @@ export const app = express();
 config({
     path: './data/config.env'
 })
+
+
+
+
 //using all middlewares
 app.use(cors({
     origin: 'http://localhost:3000',

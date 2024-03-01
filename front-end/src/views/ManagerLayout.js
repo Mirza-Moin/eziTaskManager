@@ -1,15 +1,9 @@
-import axios from 'axios'
-
-function ManagerLayout() {
-    const onLogout = () =>{
-        console.log('running')
-      localStorage.removeItem('token')
-      window.location='/login'
-    }
+import TaskList from "../components/TaskList";
+function ManagerLayout({role}) {
     return (
-        <div> heloo world
-            <button onClick={onLogout} className="bg-blue-500 ">Manager Logout</button>
-        </div>
+        <>
+          <TaskList role={role}/>
+        </>
     );
 }
 

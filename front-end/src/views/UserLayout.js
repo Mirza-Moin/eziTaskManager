@@ -1,15 +1,11 @@
 import React from 'react'
+import TaskList from '../components/TaskList';
 
-function UserLayout() {
-    const onLogout = () =>{
-        console.log('running')
-      localStorage.removeItem('token')
-      window.location='/login'
-    }
+function UserLayout({role}) {
     return (
-        <div> heloo world
-            <button onClick={onLogout} className="bg-blue-500 ">User Logout</button>
-        </div>
+        <>
+          <TaskList role={role}/>
+        </>
     );
 }
 
