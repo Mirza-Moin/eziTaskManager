@@ -60,15 +60,18 @@ export const io = new Server(server,{
 // } )
 
 
-// io.on('connection',(socket)=>{
-//   console.log("User Connected",socket.id)
-//   let data = 1234567
-//   socket.emit("task-update",data)
+io.on('connection',(socket)=>{
+  console.log("User Connected",socket.id)
+  
+  socket.on("new-post",data=>{
+    console.log("the new task is",data)
+    socket.broadcast.emit("new-post",data)
+  })
 
-//   socket.on("disconnect",()=>{
-//   console.log("User disconnected",socket.id)
-//   })
-// })
+  socket.on("disconnect",()=>{
+  console.log("User disconnected",socket.id)
+  })
+})
 
 
 

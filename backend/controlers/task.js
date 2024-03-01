@@ -32,7 +32,7 @@ export const getMyTask = async (req, res, next) => {
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
   const { title, description, status } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   const updatedData = await Task.findByIdAndUpdate(
     req.params.id,
     req.body.task,
