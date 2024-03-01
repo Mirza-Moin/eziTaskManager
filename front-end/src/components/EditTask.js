@@ -11,19 +11,20 @@ function Login() {
     const taskInfo = location.state
   
   const [task, setTask] = useState({
-    id:taskInfo._id,
-    title: taskInfo.title,
-    description: taskInfo.description,
-    status:taskInfo.status
+    id:taskInfo?._id,
+    title: taskInfo?.title,
+    description: taskInfo?.description,
+    status:taskInfo?.status
   });
-  console.log(task)
-  const enabled = task.title.length > 10 && task.description.length > 15 && task.status.length > 4;
+  // console.log(task)
+  const enabled = task?.title?.length > 10 && task?.description?.length > 15 && task?.status?.length > 4;
   const onSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateTask(task))
     window.history.back();
 
   }
+  console.log("running")
   return (
     <div>
       <section className="bg-gray-100 h-screen">

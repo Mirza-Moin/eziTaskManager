@@ -11,7 +11,7 @@ export const isAuthenticated = async(req,res,next)=>{
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         req.user = decoded.user;
         
-        console.log(req.user.role)
+        // console.log(req.user.role)
         // console.log('running while requesting')
         return next();
     } catch (err) {

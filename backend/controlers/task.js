@@ -1,5 +1,5 @@
 import { Task } from "../models/task.js";
-
+import {io} from '../app.js'
 
 
 // ********CONTROLLERS FOR ADMIN ROLE*************
@@ -20,7 +20,7 @@ export const newTask = async (req, res, next) => {
   });
 };
 
-export const getMyAdminTask = async (req, res, next) => {
+export const getMyTask = async (req, res, next) => {
   const tasks = await Task.find();
 
   res.status(200).json({
@@ -29,7 +29,7 @@ export const getMyAdminTask = async (req, res, next) => {
   });
 };
 
-export const updateAdminTask = async (req, res, next) => {
+export const updateTask = async (req, res, next) => {
   const { id } = req.params;
   const { title, description, status } = req.body;
   console.log(req.body);
@@ -38,7 +38,16 @@ export const updateAdminTask = async (req, res, next) => {
     req.body.task,
     { new: true }
   );
-
+  // io.on('connection',(socket)=>{
+  //   console.log("User Connected",socket.id)
+  //   // let data = 1234567
+  //   socket.emit("task-update",updatedData)
+  //  console.log("running inside the socket")
+  //   socket.on("disconnect",()=>{
+  //   console.log("User disconnected",socket.id)
+  
+  //   })
+  // })
   res.status(200).json({
     success: true,
     message: "Task Updated Successfull",
@@ -46,7 +55,7 @@ export const updateAdminTask = async (req, res, next) => {
   });
 };
 
-export const deleteAdminTask = async (req, res, next) => {
+export const deleteTask = async (req, res, next) => {
   const { id } = req.params;
 
   const task = await Task.findById(id);
@@ -59,41 +68,3 @@ export const deleteAdminTask = async (req, res, next) => {
   });
 };
 
-// **************CONTROLLERS FOR MANAGER ROLE*****************
-
-export const getMyManagerTask = async (req, res, next) => {
-  const tasks = await Task.find();
-
-  res.status(200).json({
-    success: true,
-    tasks,
-  });
-};
-
-export const updateManagerTask = async (req, res, next) => {
-  const { id } = req.params;
-  const { title, description, status } = req.body;
-  console.log(req.body);
-  const updatedData = await Task.findByIdAndUpdate(
-    req.params.id,
-    req.body.task,
-    { new: true }
-  );
-
-  res.status(200).json({
-    success: true,
-    message: "Task Updated Successfull",
-    updatedData,
-  });
-};
-
-// *************CONTROLLERS FOR USER ROLE***************
-
-export const getMyUserTask = async (req, res, next) => {
-  const tasks = await Task.find();
-
-  res.status(200).json({
-    success: true,
-    tasks,
-  });
-};

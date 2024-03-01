@@ -8,7 +8,7 @@ const fetchTasks = createAsyncThunk('tasks/fetch',async()=>{
     const response = await axios.get('http://localhost:4000/api/v1/task/all', {
         headers: { Authorization: `Bearer ${token}` },
       })
-      console.log('the response from the thunk',response.data.tasks)
+      // console.log('the response from the thunk',response.data.tasks)
       return response.data.tasks
 })
 
