@@ -63,9 +63,13 @@ export const io = new Server(server,{
 io.on('connection',(socket)=>{
   console.log("User Connected",socket.id)
   
-  socket.on("new-post",data=>{
-    console.log("the new task is",data)
-    socket.broadcast.emit("new-post",data)
+  socket.on("task-updated",data=>{
+    // console.log("the new task is",data)
+    socket.broadcast.emit("task-updated",data)
+  })
+  socket.on("feedback-added",data=>{
+    // console.log("the new task is",data)
+    socket.broadcast.emit("feedback-added",data)
   })
 
   socket.on("disconnect",()=>{

@@ -11,7 +11,7 @@ const updateTask = createAsyncThunk('task/update',async(task)=>{
       })
 
       const socket = io("http://localhost:4000")
-      socket.emit("new-post",response.data.updatedData)
+      socket.emit("task-updated",response.data.updatedData)
       // console.log('the response from the thunk',response.data)
       return response.data.updatedData
 })

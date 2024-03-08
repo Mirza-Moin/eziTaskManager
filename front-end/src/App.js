@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { io } from "socket.io-client";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Login from "./views/Login";
 import Registration from "./views/Registration";
@@ -10,25 +9,7 @@ import EditTask from "./components/EditTask";
 import NewTask from "./components/NewTask";
 
 function App() {
-  // const socket = useMemo(() => io("http://localhost:4000"), []);
-
-  // const handleClick = () => {
-  //   socket.emit("message", "Button Clicked on front end");
-  // };
-
-  // useEffect(() => {
-  //   socket.on("connect", () => {
-  //     console.log("socket id", socket.id);
-  //   });
-
-  //   socket.on("receive-msg", (data) => {
-  //     console.log("received", data);
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+ 
 
   const userToken = localStorage.getItem("token");
   const role = JSON.parse(localStorage.getItem("role"));
@@ -71,6 +52,8 @@ function App() {
             </h1>
           }
         ></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/registration" element={<Registration />}></Route>
       </Routes>
     </>
   );

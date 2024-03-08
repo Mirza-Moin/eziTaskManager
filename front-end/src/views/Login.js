@@ -9,7 +9,7 @@ function Login() {
     userName: "",
     password: "",
   });
-  const enabled = formData.userName.length > 7 && formData.password.length > 7;
+  const enabled = formData.userName.length > 0 && formData.password.length > 7;
   const onSubmit = async (e) => {
     e.preventDefault();
     try{

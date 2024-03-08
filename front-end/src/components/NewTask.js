@@ -11,7 +11,7 @@ function Login() {
     
     title: "",
     description: "",
-    status:""
+    status:"To Do"
   });
   const enabled = task.title.length > 10 && task.description.length > 15 && task.status.length > 4;
   const onSubmit = async (e) => {
@@ -67,6 +67,7 @@ function Login() {
                 <div className="mt-5 text-black">
                     <div className="mt-1">
                       <select
+                      defaultValue={"Status*"}
                         // value={formData.uniRole}
                         onChange={(e) =>
                           setTask({
@@ -78,10 +79,10 @@ function Login() {
                         required
                         autoComplete="off"
                       >
-                        <option className="" value="Role*" disabled selected>
+                        <option className="" value="Role*" disabled>
                           Status*
                         </option>
-                        <option value="To Do">To Do</option>
+                        <option value="To Do" selected>To Do</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
                       </select>

@@ -1,11 +1,17 @@
 
 
 const authAdmin = (req, res, next) => {
-    // console.log(req.user.role);
     if (req.user.role === 'Admin') {
         return next();
     }
     return res.status(403).json({ msg: 'ACCESS DENIED' })
+}
+
+const authUser = (req,res,next) =>{
+  if(req.user.role === "User"){
+    return next();
+  }
+  return res.status(404).json({success: false, message:"only user can add feedback..."})
 }
 
 const authGetAllTasks = (req,res,next)=>{
@@ -22,4 +28,4 @@ const authUpdateTask = (req,res,next)=>{
     return res.status(403).json({ msg: 'ACCESS DENIED' })
 }
 
-  export {authAdmin, authGetAllTasks, authUpdateTask}
+  export {authAdmin, authGetAllTasks, authUpdateTask, authUser}
