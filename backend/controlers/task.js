@@ -138,6 +138,8 @@ export const updateTask = async (req, res, next) => {
   });
 };
 
+
+
 export const addFeedback = async (req, res) => {
   const { id } = req.params;
   const { status, description } = req.body.feedback;
@@ -242,13 +244,15 @@ export const deleteFeedback = async (req, res) => {
   });
 };
 
+
 export const updateFeedback = async (req, res, next) => {
   const { userId, taskId } = req.params;
   const { status } = req.body;
   console.log(status);
 
   const task = await Task.findById(taskId);
-  console.log(task);
+  const user = await User.findById(userId)
+  // console.log(task);
   const updatedFeedback = task.feedback
     .map((feedback) => {
       if (feedback.user.toString() === userId) {
@@ -260,8 +264,9 @@ export const updateFeedback = async (req, res, next) => {
     // .filter((feedback) => feedback.user.toString() === userId);
     task.feedback = updatedFeedback
     const updatedData = await task.save()
-  console.log("targetted feedback", updatedFeedback);
-
+   console.log("user is",user)
+  sendTaskUpdateEmail(user.email);
+   
   res.status(200).json({
     success: true,
     message: "Feedback updated Successfully",
@@ -269,6 +274,34 @@ export const updateFeedback = async (req, res, next) => {
     updatedData,
   });
 };
+
+
+const sendTaskUpdateEmail = async (userEmail) => {
+  console.log(userEmail)
+  const transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // Use `true` for port 465, `false` for all other ports
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
+  });
+
+  const mailOptions = {
+      from: '"eziTask"  eziTaskManager@gmail.com',
+      to: "moinmirza673@gmail.com",
+      subject: 'Your Task Updated by admin',
+      text: 'Your task has been updated. Please check the details.'
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+  console.log(info.messageId)
+}
+
+
+
+
 
 export const deleteTask = async (req, res, next) => {
   const { id } = req.params;

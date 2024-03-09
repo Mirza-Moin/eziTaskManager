@@ -4,6 +4,7 @@ import { deleteFeedback } from '../store';
 import { updateFeedback } from '../store';
 
 function AdminControls({taskId,userId}) {
+  console.log("admin controls running")
   const dispatch = useDispatch()
   const [showForm, setShowForm] = useState(false);
   const [status, setStatus] = useState("");

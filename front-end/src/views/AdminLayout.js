@@ -9,6 +9,7 @@ import { fetchTasks, deleteTask, } from "../store";
 import UserActivity from "../components/UserActivity";
 
 function AdminLayout({ role }) {
+  console.log("admin layout running")
 
   const [notification, setNotification] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
