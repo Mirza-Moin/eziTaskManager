@@ -17,6 +17,7 @@ const taskSchema = new mongoose.Schema({
     },
     feedback:[{
         user:{type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        userName: String,
         description: String,
         status: String
     }

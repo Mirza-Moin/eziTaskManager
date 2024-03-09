@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateTask } from "../store/thunks/updateTask";
-
+import { updateTask } from "../store";
 
 
 function Login() {

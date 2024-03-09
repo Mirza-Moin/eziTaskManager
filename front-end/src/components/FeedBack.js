@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {  useDispatch } from "react-redux";
-import { addFeedback } from "../store/thunks/addFeedback";
+import { addFeedback } from "../store";
 
 function FeedBack({taskId,status}) {
   const dispatch = useDispatch()
@@ -11,6 +11,7 @@ function FeedBack({taskId,status}) {
   });
   const [showForm, setShowForm] = useState(false);
   const handleSubmit = (e) => {
+    e.preventDefault()
     dispatch(addFeedback(feedback))
     setShowForm(!showForm);
     setFeedBack({
@@ -33,7 +34,7 @@ function FeedBack({taskId,status}) {
       {showForm && (
         <div>
           <h1 className="text-lg font-medium">Any Feedback to user</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e)=>handleSubmit(e)}>
             <div className=" mt-1 mr-10 text-black">
               <textarea
                 value={feedback.description}

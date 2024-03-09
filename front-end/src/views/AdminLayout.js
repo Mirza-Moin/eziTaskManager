@@ -5,20 +5,22 @@ import { io } from "socket.io-client";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
-import { fetchTasks, deleteTask } from "../store";
-import FeedBack from "../components/FeedBack";
+import { fetchTasks, deleteTask, } from "../store";
 import UserActivity from "../components/UserActivity";
 
 function AdminLayout({ role }) {
+
   const [notification, setNotification] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
   const socket = useMemo(() => io("http://localhost:4000"), []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, isLoading, error } = useSelector((state) => state.tasks);
+  const { data: tasksData, isLoading: tasksIsLoading, error: tasksError } = useSelector((state) => state.tasks);
+ 
 
-  console.log("task list rerender");
+
+
 
   useEffect(() => {
     if (role === "Admin") {
@@ -37,11 +39,11 @@ function AdminLayout({ role }) {
     dispatch(deleteTask(id));
   };
 
-  if (isLoading) {
+  if (tasksIsLoading) {
     return <h1>Loading.....</h1>;
   }
-  if (error) {
-    return <h1>{error}</h1>;
+  if (tasksError) {
+    return <h1>{tasksError}</h1>;
   }
 
   return (
@@ -116,10 +118,13 @@ function AdminLayout({ role }) {
         >
           Log out
         </button>
+        {/* <div className="bg-blue-800 py-10 text-2xl text-end pr-20 font-bold">Total Task: {data.length}</div> */}
+
       </div>
-      <div className=" w-[100%] mx-auto bg-gray-100 py-10 rounded-lg">
+      <div className=" w-[100%] mx-auto bg-gray-100  rounded-lg">
+        <div className="bg-blue-800 py-10 text-2xl text-end pr-20 font-bold">Total Task: {tasksData.length}</div>
         {/* task body start for here */}
-        {data
+        {tasksData
           ?.slice()
           .reverse()
           .map((task, index) => {
@@ -165,7 +170,7 @@ function AdminLayout({ role }) {
                   </div>
                 </div>
                 {/* admin tables to list track task status related to specific user and feedback from specific user */}
-               <UserActivity/>
+               <UserActivity taskId={task?._id}/>
 
               </div>
             );

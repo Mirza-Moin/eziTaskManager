@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTasks } from "../thunks/fetchTasks";
-import { deleteTask } from "../thunks/deleteTask";
-import { createTask } from "../thunks/createTask";
-import { updateTask } from "../thunks/updateTask";
-import { addFeedback } from "../thunks/addFeedback";
+
+import { fetchTasks } from "../thunks/taskThunks/fetchTasks";
+import { updateTask } from "../thunks/taskThunks/updateTask";
+import { createTask } from "../thunks/taskThunks/createTask";
+import { deleteTask } from "../thunks/taskThunks/deleteTask";
+import { addFeedback } from "../thunks/feedbackThunks/addFeedback";
+import { deleteFeedback } from "../thunks/feedbackThunks/deleteFeedback";
+import { updateFeedback } from "../thunks/feedbackThunks/updateFeedback";
 
 const taskSlice = createSlice({
   name: "tasks",
@@ -86,6 +89,49 @@ const taskSlice = createSlice({
       state.isLoading = false;
       console.log("error is slice is", action.error);
       state.error = action.error;
+    });
+
+    // for deleting feedback
+    builder.addCase(deleteFeedback.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteFeedback.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const updatedTask = action.payload; 
+      const index = state.data.findIndex(
+        (task) => task._id === updatedTask._id
+      );
+      if (index !== -1) {
+        state.data[index] = updatedTask;
+      } else {
+        state.data.push(updatedTask);
+      }
+    });
+    builder.addCase(deleteFeedback.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
+
+    // for updating feedbacd
+
+    builder.addCase(updateFeedback.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateFeedback.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const updatedTask = action.payload; 
+      const index = state.data.findIndex(
+        (task) => task._id === updatedTask._id
+      );
+      if (index !== -1) {
+        state.data[index] = updatedTask;
+      } else {
+        state.data.push(updatedTask);
+      }
+    });
+    builder.addCase(updateFeedback.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error
     });
   },
 });
